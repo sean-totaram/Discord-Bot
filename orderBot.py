@@ -5,7 +5,8 @@ Author: twnkltoe
 Order of the Fallen discord server bot
 
 TODO:
-
+security
+ *remove showing keys
 General
  *add more features
 '''
@@ -26,7 +27,14 @@ client = commands.Bot(command_prefix = "?")
 
 #Predefined Variables
 #   Discord
-TOKEN = "NTI1NDAzNTM0ODQ2NDU5OTE3.Dv23yA.hv95Ul8Hz-P48oTc6Lezb-eAaeU"
+KEYS = {}
+filepath = "keys.txt"
+with open(filepath) as fp:
+    for line in fp:
+        (key, val) = line.split()
+        KEYS[str(key)] = val
+
+#TOKEN
 userlist = []
 
 #   Channels
@@ -34,29 +42,6 @@ games = ["conan-exiles", "destiny", "eso", "league-of-legends", "overwatch",
     "path-of-exile", "r6-siege", "rocket-league", "wow"]
 twnkleGames =["Arma 3", "Conan Exiles", "ESO", "GTA V", 
     "Just Cause 3", "Minecraft", "The Witcher 3", "Siege", "BF 1"]
-
-barrensChannel = "232183982547009536"
-suggestionsChannel = "525529661065658378"
-orderChannel = "525530245210570753"
-
-conanChannel = "525358403942350865"
-destinyChannel = "525358246509150239"
-esoChannel = "525358346983833600"
-lolChannel = "525358544443146242"
-overwatchChannel = "525358620368437248"
-poeChannel = "525358316126339105"
-r6siegeChannel = "525358709917089817"
-rocketLeagueChannel = "525537148880027658"
-wowChannel = "525358220613648390"
-
-#   Roles
-adminRole = "525418694755483669"
-modRole = "525493523546505252"
-
-#   Users
-twnkltoeUser = "<@232183497098395650>"
-holymagumboUser = "<@83729683325128704>"
-
 
 #Helper functions
 #   Finds difference between input date and today
@@ -90,14 +75,14 @@ def checkGamesList(gameName):
 #   Checks if author is admin
 def checkAdmin(roles):
     for role in roles:
-        if role.id == adminRole:
+        if role.id == KEYS.get("adminRole"):
             return True
     return False
 
 #   Checks if author is mod
 def checkMod(roles):
     for role in roles:
-        if role.id == modRole:
+        if role.id == KEYS.get("modRole"):
             return True
     return False
 
@@ -114,7 +99,7 @@ def on_ready():
 def on_member_join(member):
     msg = "Welcome to the Order of the Fallen server " + str(member.mention)
     yield from client.send_message(discord.Object(
-        id=barrensChannel), msg)
+        id=KEYS.get("barrensChannel")), msg)
 
 #   !commands
 @client.event
@@ -144,12 +129,12 @@ def on_message(message):
 
     #displays creators name
     if message.content.startswith("!credit"):
-        msg = "OrderBot was written in Python and created by the glorious Mr. %s for the Order of the Fallen WoW Guild" %twnkltoeUser 
+        msg = "OrderBot was written in Python and created by the glorious Mr. %s for the Order of the Fallen WoW Guild" %KEYS.get("twnkltoeUser")
         yield from client.send_message(message.channel, msg)
 
     #Picks a random game for me to play
     if message.content.startswith("!pickagame"):
-       if ("<@" + message.author.id + ">") == twnkltoeUser:
+       if ("<@" + message.author.id + ">") == KEYS.get("twnkltoeUser"):
             selectedGame = twnkleGames[random.randint(0, len(twnkleGames))]
             msg = "You should def fucking play " + selectedGame
             yield from client.send_message(message.channel, msg)
@@ -176,17 +161,17 @@ def on_message(message):
                 row = getInfo(args[1])
                 time1 = getCountdown(row[2])
                 msg = str(time1)[:6] + "s till " + str(row[1])
-                yield from client.send_message(discord.Object(id = wowChannel), msg)
+                yield from client.send_message(discord.Object(id = KEYS.get("wowChannel")), msg)
             elif(args[1] == "overwatch"):
                 row = getInfo(args[1])
                 time = getCountdown(row[2])
                 msg = str(time)[:6] + "s till " + str(row[1])
-                yield from client.send_message(discord.Object(id = overwatchChannel), msg)
+                yield from clinet.send_message(discord.Object(id = KEYS.get("overwatchChannel")), msg)
         elif args[1] == "Dave":
             row = getInfo(args[1])
             time = getCountdown(row[2])
             msg = str(time[:6] + "s till" + str(row[1]))
-            yield from client.send_message(discord.Object(id = barrensChannel), msg)
+            yield from client.send_message(discord.Object(id = KEYS.get("barrensChannel")), msg)
         else:
             msg = "Sorry {0.author.mention} we don't have that game channel".format(message)
             yield from client.send_message(message.channel, msg)
@@ -232,4 +217,4 @@ def on_message(message):
             msg = "You do not have permission to end this event"
             yield from client.send_message(message.channel, msg)
 
-client.run(TOKEN)
+client.run(KEYS.get("TOKEN"))
