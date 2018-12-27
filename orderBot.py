@@ -244,7 +244,7 @@ def on_message(message):
         print(mentionID)
         id = mentionID[2:len(mentionID)-1]
         print(id)
-        user = discord.utils.get(client.get_member(id))
+        user = client.get_member(id)
         print(user)
         """target = args[1]
         print(target)
