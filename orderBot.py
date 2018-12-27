@@ -240,16 +240,19 @@ def on_message(message):
 	#ask user to join lounge
     if message.content.startswith("!joinme"):
         args = message.content.split(" ")
-        target = args[1].replace('@', "")
-        target = args[1].replace('<', "")
-        target = args[1].replace('>', "")
-        target = args[1].replace('!', "")
-        if message.author == KEYS.get("twnkltoeUser"):
-            msg = "My master requests your presence in voice chat"
-            yield from client.send_message(target, msg)
-        else:
-            msg = "{0.author.mention} requests you in voice chat"
-            yield from client.send_message(target, msg)
+        target = args[1]
+        target = target[3:len(target)-1]
+        server = message.server
+        user = server.get_member(user_id = target)
+        caller = message.author.mention
+       
+    if message.author == KEYS.get("twnkltoeUser"):
+        msg = "My master requests your presence in voice chat"
+        yield from client.send_message(user, msg)
+    else:
+        msg = "%s requests you in voice chat" %caller
+        yield from client.send_message(user, msg)
+
             
     """
     Events
