@@ -236,7 +236,21 @@ def on_message(message):
         else:
             msg = "HEY %s, DONT SAY THAT. SHUT THE FUCK UP" %args[1]
             yield from client.send_message(message.channel, msg)
-            
+			
+	#ask user to join lounge
+	if message.content.startswith("!joinme"):
+		args = message.content.split(" ")
+		target = args[1]
+		if message.author == KEYS.get("twnkltoeUser"):
+			msg = "My master requests your presence in voice chat"
+			yield from client.send_message(target, msg)
+		elif target[0:2] != "<@":
+			msg = "That is not a valid user on this server"
+			yield from client.send_message(message.channel, msg)
+		else:
+			msg = "{0.author.mention} requests you in voice chat"
+			yield from client.send_message(target, msg)
+            ``
     """
     Events
     """
