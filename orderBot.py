@@ -25,6 +25,7 @@ client = commands.Bot(command_prefix = "?")
 
 #Predefined Variables
 maintenanceFlag = False
+
 #   Discord
 KEYS = {}
 filepath = "keys.txt"
@@ -45,9 +46,11 @@ twnkleGames =["Arma 3", "Conan Exiles", "ESO", "GTA V",
 #Helper functions
 #   get and set to check maintenance
 def getMaintenance():
+    global maintenanceFlag
     return maintenanceFlag
 
 def setMaintenance(flag):
+    global maintenanceFlag
     maintenanceFlag = flag
 	
 #   Finds difference between input date and today
@@ -132,7 +135,6 @@ def on_message(message):
             setMaintenance(flag = True)
             msg = "Maintenance mode activated"
             yield from client.send_message(message.channel, msg)
-            print(getMaintenance())
         else:
             msg = "{0.author.mention}, do you really think you can do that?".format(message)
             yield from client.send_message(message.channel, msg)
@@ -143,7 +145,6 @@ def on_message(message):
             setMaintenance(flag = False)
             msg = "Maintenance mode over"
             yield from client.send_message(message.channel, msg)
-            print(getMaintenance())
         else:
             msg = "{0.author.mention}, do you really think you can do that?".format(message)
             yield from client.send_message(message.channel, msg)
