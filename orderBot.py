@@ -221,7 +221,16 @@ def on_message(message):
     #tells user to shut up
     if message.content.startswith("!shutup"):
         args = message.content.split(" ")
-        print(args[1])
+        target = args[1]
+        if target == KEYS.get("twnkltoeUser")
+            msg = "HOW DARE YOU, THATS MY MASTER YA'KNOW"
+            yield from client.send_message(message.channel, msg)
+        elif target[0:2] != "<@":
+            msg = "HEY IDIOT THATS NOT A PERSON"
+            yield from client.send_message(message.channel, msg)
+        else:
+            msg = "HEY %s, DONT SAY THAT. SHUT THE FUCK UP" %args[1]
+            yield from client.send_message(message.channel, msg)
             
     """
     Events
