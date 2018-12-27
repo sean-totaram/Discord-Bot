@@ -240,13 +240,16 @@ def on_message(message):
 	#ask user to join lounge
     if message.content.startswith("!joinme"):
         args = message.content.split(" ")
-        target = discord.Object(id = args[1][2:len(args[1])-1])
+        target = args[1].replace('@', "")
+        target = args[1].replace('<', "")
+        target = args[1].replace('>', "")
+        target = args[1].replace('!', "")
         if message.author == KEYS.get("twnkltoeUser"):
             msg = "My master requests your presence in voice chat"
             yield from client.send_message(target, msg)
         else:
             msg = "{0.author.mention} requests you in voice chat"
-            yield from client.send_message(target, msg)"""
+            yield from client.send_message(target, msg)
             
     """
     Events
