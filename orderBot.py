@@ -245,15 +245,13 @@ def on_message(message):
         server = message.server
         user = server.get_member(user_id = target)
         caller = message.author.mention
-       
-    if message.author == KEYS.get("twnkltoeUser"):
-        msg = "My master requests your presence in voice chat"
-        yield from client.send_message(user, msg)
-    else:
-        msg = "%s requests you in voice chat" %caller
-        yield from client.send_message(user, msg)
-
-            
+        if message.author.mention == KEYS.get("twnkltoeUser"):
+            msg = "My master requests your presence in voice chat"
+            yield from client.send_message(user, msg)
+        else:
+            msg = "%s requests you in voice chat" %caller
+            yield from client.send_message(user, msg)
+     
     """
     Events
     """
