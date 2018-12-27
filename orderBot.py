@@ -112,8 +112,8 @@ def on_member_join(member):
 @client.event
 @asyncio.coroutine
 def on_member_remove(member):
-    msg = "The traitor %s has left the server" + %str(member.mention)
-    yield from client.send_message(discard.Object(id=KEYS.get("barrensChannel")), msg)
+    msg = "The traitor %s has left the server" %str(member.mention)
+    yield from client.send_message(discord.Object(id=KEYS.get("barrensChannel")), msg)
     
 #   !commands
 @client.event
