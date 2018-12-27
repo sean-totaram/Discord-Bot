@@ -123,7 +123,11 @@ def on_message(message):
     #bot doesn't answer to self
     if message.author == client.user:
         return
-		
+
+    """
+    Server Admin Functions
+    """
+    
     #bot in maintenance mode
     if getMaintenance() and not checkAdmin(roles) and message.content.startswith("!"):
         msg = "Don't fucking bother me {0.author.mention}".format(message)
@@ -156,17 +160,7 @@ def on_message(message):
         else:
             msg = "Sorry {0.author.mention} you do not have permission.".format(message)
             yield from client.send_message(message.channel, msg)
-
-    #says hello       
-    if message.content.startswith("!hello"):
-        msg = "Hello {0.author.mention}".format(message)
-        yield from client.send_message(message.channel, msg)
-
-    #displays creators name
-    if message.content.startswith("!credit"):
-        msg = "OrderBot was written in Python and created by the glorious Mr. %s for the Order of the Fallen WoW Guild" %KEYS.get("twnkltoeUser")
-        yield from client.send_message(message.channel, msg)
-
+    
     #Picks a random game for me to play
     if message.content.startswith("!pickagame"):
        if ("<@" + message.author.id + ">") == KEYS.get("twnkltoeUser"):
@@ -176,6 +170,15 @@ def on_message(message):
        else:
             msg = "Sorry {0.author.mention} you cant tell me what to fucking do.".format(message)
             yield from client.send_message(message.channel, msg)
+    
+    """
+    User Functions
+    """
+    
+    #says hello       
+    if message.content.startswith("!hello"):
+        msg = "Hello {0.author.mention}".format(message)
+        yield from client.send_message(message.channel, msg)
 
     #set countdown time
     if message.content.startswith("!settime"):
@@ -190,7 +193,6 @@ def on_message(message):
     #returns time till update
     if message.content.startswith("!gettime"):
         args = message.content.split(" ")
-        print(args[1])
         if checkGamesList(args[1]):
             if(args[1] == "wow"):
                 row = getInfo(args[1])
@@ -210,7 +212,21 @@ def on_message(message):
         else:
             msg = "Sorry {0.author.mention} we don't have that game channel".format(message)
             yield from client.send_message(message.channel, msg)
-
+            
+    #displays creators name
+    if message.content.startswith("!credit"):
+        msg = "OrderBot was written in Python and created by the glorious Mr. %s for the Order of the Fallen WoW Guild" %KEYS.get("twnkltoeUser")
+        yield from client.send_message(message.channel, msg)
+            
+    #tells user to shut up
+    if message.content.startswith("!shutup"):
+        args = message.content.split(" ")
+        print(args[1])
+            
+    """
+    Events
+    """
+    
     #start game generator
     if message.content.startswith("!startgame"):
         if checkAdmin(roles) or checkMod(roles):
