@@ -245,7 +245,7 @@ def on_message(message):
         id = mentionID[2:len(mentionID)]
         print(id)
         user = discord.utils.get(client.get_all_members(), id)
-        print user
+        print(user)
         """target = args[1]
         print(target)
         if message.author == KEYS.get("twnkltoeUser"):
