@@ -241,7 +241,10 @@ def on_message(message):
     if message.content.startswith("!joinme"):
         args = message.content.split(" ")
         target = args[1]
-        target = target[3:len(target)-1]
+        target = target.replace("<", "")
+        target = target.replace("@", "")
+        target = target.replace("!", "")
+        target = target.replace(">", "")
         server = message.server
         user = server.get_member(user_id = target)
         caller = message.author.mention
