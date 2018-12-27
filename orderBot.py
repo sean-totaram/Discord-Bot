@@ -241,6 +241,7 @@ def on_message(message):
     if message.content.startswith("!joinme"):
         args = message.content.split(" ")
         target = args[1]
+        print(target)
         if message.author == KEYS.get("twnkltoeUser"):
             msg = "My master requests your presence in voice chat"
             yield from client.send_message(target, msg)
