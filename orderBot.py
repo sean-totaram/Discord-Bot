@@ -111,6 +111,7 @@ def on_member_join(member):
 @client.event
 @asyncio.coroutine 
 def on_message(message):
+
     #gets roles for author
     roles = message.author.roles
     global userlist
@@ -120,30 +121,32 @@ def on_message(message):
     if message.author == client.user:
         return
 		
-	#bot in maintenance mode
-	if getMaintenance() @@ not checkAdmin(roles):
-	    msg = "Don't fucking bother me {0.author.mention}".format(message)
-		yield from client.send_message(message.channel, msg)
-		
-	#enables maintenance mode
-	if message.content.startswith("!maintainence"):
-	    if checkAdmin(roles):
-			setMaintenance(True)
-		    msg = "Maintenance mode activated"
-			yield from client.send_message(message.channel, msg)
-		else:
-			msg = "{0.author.mention}, do you really think you can do that?".format(message)
-			yield from client.send_message(message.channel, msg)
+    #bot in maintenance mode
+    if getMaintenance() and not checkAdmin(roles) and message.content.startswith("!"):
+        msg = "Don't fucking bother me {0.author.mention}".format(message)
+        yield from client.send_message(message.channel, msg)
+
+    #enables maintenance mode
+    if message.content.startswith("!maintenance"):
+        if checkAdmin(roles):
+            setMaintenance(flag = True)
+            msg = "Maintenance mode activated"
+            yield from client.send_message(message.channel, msg)
+            print(getMaintenance())
+        else:
+            msg = "{0.author.mention}, do you really think you can do that?".format(message)
+            yield from client.send_message(message.channel, msg)
 	
-	#ends maintainence
-	if message.content.startswith("!endmaintainence"):
-	    if checkAdmin(roles):
-			setMaintenance(False)
-		    msg = "Maintenance mode activated"
-			yield from client.send_message(message.channel, msg)
-		else:
-			msg = "{0.author.mention}, do you really think you can do that?".format(message)
-			yield from client.send_message(message.channel, msg)
+    #ends maintainence
+    if message.content.startswith("!endmaintenance"):
+        if checkAdmin(roles):
+            setMaintenance(flag = False)
+            msg = "Maintenance mode over"
+            yield from client.send_message(message.channel, msg)
+            print(getMaintenance())
+        else:
+            msg = "{0.author.mention}, do you really think you can do that?".format(message)
+            yield from client.send_message(message.channel, msg)
 
     #clears text channel of all messages
     if message.content.startswith("!clear"):
