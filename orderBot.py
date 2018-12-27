@@ -222,7 +222,6 @@ def on_message(message):
     if message.content.startswith("!shutup"):
         args = message.content.split(" ")
         target = args[1]
-        print(target)
         if target == KEYS.get("twnkltoeUser"):
             msg = "HOW DARE YOU, THATS MY MASTER YA'KNOW"
             yield from client.send_message(message.channel, msg)
