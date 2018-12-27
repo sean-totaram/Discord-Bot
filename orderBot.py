@@ -5,8 +5,6 @@ Author: twnkltoe
 Order of the Fallen discord server bot
 
 TODO:
-security
- *remove showing keys
 General
  *add more features
 '''
@@ -26,6 +24,7 @@ Client = discord.Client()
 client = commands.Bot(command_prefix = "?")
 
 #Predefined Variables
+maintenanceFlag = False
 #   Discord
 KEYS = {}
 filepath = "keys.txt"
@@ -44,6 +43,13 @@ twnkleGames =["Arma 3", "Conan Exiles", "ESO", "GTA V",
     "Just Cause 3", "Minecraft", "The Witcher 3", "Siege", "BF 1"]
 
 #Helper functions
+#   get and set to check maintenance
+def getMaintenance():
+    return maintenanceFlag
+
+def setMaintenance(flag):
+    maintenanceFlag = flag
+	
 #   Finds difference between input date and today
 def getCountdown(target):
     end = datetime.strptime(target, "%Y-%m-%d")
@@ -113,6 +119,31 @@ def on_message(message):
     #bot doesn't answer to self
     if message.author == client.user:
         return
+		
+	#bot in maintenance mode
+	if getMaintenance() @@ not checkAdmin(roles):
+	    msg = "Don't fucking bother me {0.author.mention}".format(message)
+		yield from client.send_message(message.channel, msg)
+		
+	#enables maintenance mode
+	if message.content.startswith("!maintainence"):
+	    if checkAdmin(roles):
+			setMaintenance(True)
+		    msg = "Maintenance mode activated"
+			yield from client.send_message(message.channel, msg)
+		else:
+			msg = "{0.author.mention}, do you really think you can do that?".format(message)
+			yield from client.send_message(message.channel, msg)
+	
+	#ends maintainence
+	if message.content.startswith("!endmaintainence"):
+	    if checkAdmin(roles):
+			setMaintenance(False)
+		    msg = "Maintenance mode activated"
+			yield from client.send_message(message.channel, msg)
+		else:
+			msg = "{0.author.mention}, do you really think you can do that?".format(message)
+			yield from client.send_message(message.channel, msg)
 
     #clears text channel of all messages
     if message.content.startswith("!clear"):
