@@ -248,9 +248,11 @@ def on_message(message):
         if message.author.mention == KEYS.get("twnkltoeUser"):
             msg = "My master requests your presence in voice chat"
             yield from client.send_message(user, msg)
+            yield from client.send_message(message.channel, "Sent")
         else:
             msg = "%s requests you in voice chat" %caller
             yield from client.send_message(user, msg)
+            yield from client.send_message(message.channel, "Sent")
      
     """
     Events
