@@ -242,9 +242,9 @@ def on_message(message):
         args = message.content.split(" ")
         mentionID = args[1]
         print(mentionID)
-        id = mentionID[2:len(mentionID)-1]
+        ID = mentionID[2:len(mentionID)-1]
         print(id)
-        user = discord.server.get_member(id)
+        user = discord.Object(id = ID)
         print(user)
         """target = args[1]
         print(target)
